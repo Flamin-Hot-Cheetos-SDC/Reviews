@@ -1,0 +1,57 @@
+{
+  "name": "sdc23",
+  "version": "1.0.0",
+  "description": "HackReactor SDC23 Project",
+  "main": "webpack.config.js",
+  "scripts": {
+    "server-dev": "npx nodemon --watch server server/index.js",
+    "client-dev": "npx webpack --watch",
+    "build": "npx webpack",
+    "start": "node server/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Flamin-Hot-Cheetos-SDC/Main-SDC-Repo"
+  },
+  "author": "Alex Libacova, Patrick Kelly, Sandy Chu",
+  "bugs": {
+    "url": "https://github.com/Flamin-Hot-Cheetos-SDC/Main-SDC-Repo/issues"
+  },
+  "rules": {
+    "react/jsx-filename-extension": [
+      1,
+      {
+        "extensions": [
+          ".js",
+          ".jsx"
+        ]
+      }
+    ],
+    "react/prop-types": 0
+  },
+  "license": "ISC",
+  "homepage" : "https://github.com/Flamin-Hot-Cheetos/Main-SDC-Repo#readme",
+  "dependencies": {
+    "@babel/core": "^7.14.6",
+    "@babel/preset-env": "^7.14.7",
+    "@babel/preset-react": "^7.14.5",
+    "axios": "^0.21.1",
+    "babel-loader": "^8.2.2",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "mongoose": "^6.1.4",
+    "nodemon": "^2.0.7",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "webpack": "^5.41.0",
+    "webpack-cli": "^4.7.2"
+  },
+  "devDependencies": {
+    "eslint": "^8.34.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-jsx-a11y": "^6.7.1",
+    "eslint-plugin-react": "^7.32.2",
+    "eslint-plugin-react-hooks": "^4.6.0"
+  }
+}
