@@ -30,19 +30,22 @@
     "react/prop-types": 0
   },
   "license": "ISC",
-  "homepage" : "https://github.com/Flamin-Hot-Cheetos/Main-SDC-Repo#readme",
+  "homepage": "https://github.com/Flamin-Hot-Cheetos/Main-SDC-Repo#readme",
   "dependencies": {
     "@babel/core": "^7.14.6",
     "@babel/preset-env": "^7.14.7",
     "@babel/preset-react": "^7.14.5",
     "axios": "^0.21.1",
     "babel-loader": "^8.2.2",
+    "csv-parser": "^3.0.0",
+    "csv-stream": "^0.2.0",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "mongoose": "^6.1.4",
     "nodemon": "^2.0.7",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "through2": "^4.0.2",
     "webpack": "^5.41.0",
     "webpack-cli": "^4.7.2"
   },

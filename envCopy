@@ -3,13 +3,13 @@
 # The following key-value pairs will be added to process.env
 # via the dotenv npm module, as used in server/index.js.
 
-PORT=3000
+# PORT=3000
 
 # Replace the following values with ones corresponding to
 # your local MySQL configuration:
-DB_HOST="localhost"
-DB_USER="root"
-DB_PASS=""
+# DB_HOST="localhost"
+# DB_USER="root"
+# DB_PASS=""
 
 # This DB will need to be created in MySQL/MongoDB:
-DB_NAME="PICK_NAME_LATER"
+# DB_NAME="PICK_NAME_LATER"

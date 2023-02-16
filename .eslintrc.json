@@ -18,5 +18,8 @@
       "react"
   ],
   "rules": {
+    "camelcase": "off",
+    "no-unused-vars": "off",
+    "import/extensions": "off"
   }
 }
