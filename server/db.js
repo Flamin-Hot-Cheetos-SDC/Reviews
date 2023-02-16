@@ -18,7 +18,7 @@ const reviewchars = new Schema({
   value: Number,
 });
 
-const ReviewChars = mongoose.model('reviewchars', reviewchars);
+const ReviewChars = mongoose.model('ReviewChars', reviewchars);
 
 const save = (id, char_id, review_id, value) => {
   const newEntry = new ReviewChars();
@@ -35,7 +35,7 @@ const reviewphotos = new Schema({
   url: String,
 });
 
-const ReviewPhotos = mongoose.model('reviewphotos', reviewphotos);
+const ReviewPhotos = mongoose.model('ReviewPhotos', reviewphotos);
 
 const savePhotos = (id, review_id, url) => {
   const photoEntry = new ReviewPhotos();

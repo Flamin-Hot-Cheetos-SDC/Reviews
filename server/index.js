@@ -10,7 +10,7 @@ const { dat } = require('../jsonConvert.js');
 
 const app = express();
 
-// app.use(express.json());
+app.use(express.json());
 // fs.createReadStream(path.join(__dirname, '../sourceFiles/characteristic_reviews.csv'))
 //   .pipe(csvParser())
 //   .pipe(through2({ objectMode: true }, (row, enc, cb) => {
@@ -38,5 +38,6 @@ const app = express();
     }
   }, {$out:"ReviewChars"}], {allowDiskUse:true})
 */
+
 app.listen(process.env.PORT);
 console.log(`Listening at http://localhost:${process.env.PORT}`);
