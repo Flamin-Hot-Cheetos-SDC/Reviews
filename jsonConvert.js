@@ -83,5 +83,3 @@ function jsonConvert2(input) {
   return data;
 }
 // console.log(jsonConvert2(charReviews.slice(0, 5)));
-
-module.exports = { dat };

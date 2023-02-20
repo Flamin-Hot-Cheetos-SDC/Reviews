@@ -16,7 +16,7 @@ const reviewchars = new Schema({
   characteristic_id: Number,
   review_id: Number,
   value: Number,
-});
+}, { collection: 'ReviewChars' });
 
 const ReviewChars = mongoose.model('ReviewChars', reviewchars);
 
@@ -44,7 +44,45 @@ const savePhotos = (id, review_id, url) => {
   photoEntry.url = url;
   return photoEntry.save();
 };
-module.exports.save = save;
-module.exports.ReviewsChars = ReviewChars;
-module.exports.savePhotos = savePhotos;
-module.exports.ReviewPhotos = ReviewPhotos;
+
+const meta = new Schema({
+  product_id: { type: Number, unique: true },
+  recommended: Object,
+  characteristics: Object,
+}, { collection: 'ReviewMeta' });
+
+const ReviewMeta = mongoose.model('ReviewMeta', meta);
+
+const saveMeta = (product_id, recommended, characteristics) => {
+  const metaEntry = new ReviewMeta();
+  metaEntry.product_id = product_id;
+  metaEntry.recommended = recommended;
+  metaEntry.characteristics = characteristics;
+  return metaEntry.save();
+};
+
+const allReviews = new Schema({
+  review_id: Number,
+  product_id: Number,
+  rating: Number,
+  date: String,
+  summary: String,
+  body: String,
+  recommend: String,
+  reported: String,
+  reviewer_name: String,
+  reviewer_email: String,
+  response: String,
+  helpfulness: Number,
+  photos: Array,
+}, { collection: 'ReviewsDatePhotos' });
+const allreviews = mongoose.model('allreviews', allReviews);
+// module.exports.save = save;
+// module.exports.ReviewsChars = ReviewChars;
+// module.exports.savePhotos = savePhotos;
+// module.exports.ReviewPhotos = ReviewPhotos;
+// module.exports.saveMeta = saveMeta;
+module.exports.ReviewMeta = ReviewMeta;
+module.exports.connection = mongoose.connection;
+module.exports.mongoose = mongoose;
+module.exports.allreviews = allreviews;
