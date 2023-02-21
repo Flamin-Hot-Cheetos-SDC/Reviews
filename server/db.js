@@ -6,10 +6,7 @@ mongoose.connect('mongodb://localhost:27017/reviews', {
   useUnifiedTopology: true,
 })
   .then(() => { console.log('Mongoose: successful connection'); })
-  .catch((err) => {
-    console.log('Mongoose: failed connection');
-    console.log('This is what broke:', err);
-  });
+  .catch((err) => { console.log('Mongoose: failed connection', err); });
 
 const reviewchars = new Schema({
   id: { type: Number, unique: true },
@@ -18,24 +15,21 @@ const reviewchars = new Schema({
   value: Number,
 }, { collection: 'ReviewChars' });
 
-const ReviewChars = mongoose.model('ReviewChars', reviewchars);
-
-const save = (id, char_id, review_id, value) => {
-  const newEntry = new ReviewChars();
-  newEntry.id = id;
-  newEntry.characteristic_id = char_id;
-  newEntry.review_id = review_id;
-  newEntry.value = value;
-  return newEntry.save();
-};
-
 const reviewphotos = new Schema({
   id: { type: Number, unique: true },
   review_id: Number,
   url: String,
-});
+}, { collection: 'ReviewPhotos' });
 
-const ReviewPhotos = mongoose.model('ReviewPhotos', reviewphotos);
+const meta = new Schema({
+  product_id: { type: Number, unique: true },
+  recommended: Object,
+  characteristics: Object,
+}, { collection: 'ReviewMeta' });
+
+const ReviewChars = mongoose.model('ReviewChars', reviewchars);
+const ReviewPhotos = mongoose.model('reviewphotos', reviewphotos, 'reviewphotos');
+const ReviewMeta = mongoose.model('ReviewMeta', meta);
 
 const savePhotos = (id, review_id, url) => {
   const photoEntry = new ReviewPhotos();
@@ -45,13 +39,14 @@ const savePhotos = (id, review_id, url) => {
   return photoEntry.save();
 };
 
-const meta = new Schema({
-  product_id: { type: Number, unique: true },
-  recommended: Object,
-  characteristics: Object,
-}, { collection: 'ReviewMeta' });
-
-const ReviewMeta = mongoose.model('ReviewMeta', meta);
+const save = (id, char_id, review_id, value) => {
+  const newEntry = new ReviewChars();
+  newEntry.id = id;
+  newEntry.characteristic_id = char_id;
+  newEntry.review_id = review_id;
+  newEntry.value = value;
+  return newEntry.save();
+};
 
 const saveMeta = (product_id, recommended, characteristics) => {
   const metaEntry = new ReviewMeta();
@@ -75,12 +70,12 @@ const allReviews = new Schema({
   response: String,
   helpfulness: Number,
   photos: Array,
-}, { collection: 'ReviewsDatePhotos' });
+}, { collection: 'allReviews' });
 const allreviews = mongoose.model('allreviews', allReviews);
 // module.exports.save = save;
 // module.exports.ReviewsChars = ReviewChars;
 // module.exports.savePhotos = savePhotos;
-// module.exports.ReviewPhotos = ReviewPhotos;
+module.exports.ReviewPhotos = ReviewPhotos;
 // module.exports.saveMeta = saveMeta;
 module.exports.ReviewMeta = ReviewMeta;
 module.exports.connection = mongoose.connection;

@@ -1,12 +1,11 @@
 /*
   // Used to aggregate aggregate URLs into one line;
-  db.ReviewPhotos.aggregate([
+  db.ORIGIN_ReviewPhotos.aggregate([
     {
-      $group:
-        {_id: "$review_id", url:{$addToSet:"$url"}}
-    },
-    {$out:"reviewphotos"}
-  ], {allowDiskUse:true})
+      $group :
+      {_id: "$review_id",
+      photos: {$push: {id: "$id", url: "$url"}}}
+    }, {$out: "reviewphotos"}], {allowDiskUse:true})
 
   // Used for aggregating review characteristics from a given unique review id
   db.reviewchars.aggregate([
