@@ -2,7 +2,6 @@ require('dotenv').config();
 const express = require('express');
 const fs = require('fs');
 const csvParser = require('csv-parser');
-const csvStream = require('csv-stream');
 const through2 = require('through2');
 const path = require('path');
 const { connection, mongoose, allreviews } = require('./db.js');
