@@ -110,13 +110,10 @@ db.reviewsDateReviewId.aggregate([
   },
   {
     $project: {
-      _id: 1, body: 1, date: 1,
-      helpfulness: 1, photos: 1,
-      product_id: 1, rating: 1,
-      reported: 1, response: 1,
-      reviewer_email: 1,
-      reviewer_name: 1,
-      summary: 1
+      _id: 1, rating: 1, summary: 1,
+      recommend: 1, response: 1, body: 1,
+      date: 1, reviewer_name: 1, reviewer_email: 1,
+      helpfulness:1, photos: 1
     }
   },
   {
@@ -177,4 +174,125 @@ db.ReviewMeta2.aggregate([
   },
   {$project: { chars: 0 }},
   {$out: "reviewMetaFinal"}], {allowDiskUse: true})
+
+//Very very unelegant solution to readd review ids into the Meta database
+db.reviewMetaFinal.aggregate([
+  {
+    $lookup: {
+      "from": "ORIGIN_chars",
+      "localField": "_id",
+      "foreignField": "product_id",
+      "as": "chars"
+    }
+  },
+  {
+    $addFields: {
+      characteristics: {
+        Comfort: {
+          $cond: [{$gt: ["$characteristics.Comfort", null]},
+          {value: "$characteristics.Comfort",
+          id: {$arrayElemAt: [{
+            $map: {
+              input: {
+                $filter: {
+                  input:"$chars",
+                  as: "c",
+                  cond: {$eq: ["$$c.name", "Comfort"]}
+              }
+            },
+            as:"a",
+            in: "$$a._id"
+          }}, 0]
+          }},
+
+          "$$REMOVE"]},
+        Fit: {
+          $cond: [{$gt: ["$characteristics.Fit", null]},
+          {value: "$characteristics.Fit",
+          id: {$arrayElemAt: [{
+            $map: {
+              input: {
+                $filter: {
+                  input:"$chars",
+                  as: "c",
+                  cond: {$eq: ["$$c.name", "Fit"]}
+              }
+            },
+            as:"a",
+            in: "$$a._id"
+          }}, 0]
+          }},"$$REMOVE"]},
+        Length: {
+          $cond: [{$gt: ["$characteristics.Length", null]},
+          {value: "$characteristics.Length",
+          id: {$arrayElemAt: [{
+            $map: {
+              input: {
+                $filter: {
+                  input:"$chars",
+                  as: "c",
+                  cond: {$eq: ["$$c.name", "Length"]}
+              }
+            },
+            as:"a",
+            in: "$$a._id"
+          }}, 0]
+          }},"$$REMOVE"]},
+        Quality: {
+          $cond: [{$gt: ["$characteristics.Quality", null]},
+          {value: "$characteristics.Quality",
+          id: {$arrayElemAt: [{
+            $map: {
+              input: {
+                $filter: {
+                  input:"$chars",
+                  as: "c",
+                  cond: {$eq: ["$$c.name", "Quality"]}
+              }
+            },
+            as:"a",
+            in: "$$a._id"
+          }}, 0]
+          }},"$$REMOVE"]},
+        Size: {
+          $cond: [{$gt: ["$characteristics.Size", null]},
+          {value: "$characteristics.Size",
+          id: {$arrayElemAt: [{
+            $map: {
+              input: {
+                $filter: {
+                  input:"$chars",
+                  as: "c",
+                  cond: {$eq: ["$$c.name", "Size"]}
+              }
+            },
+            as:"a",
+            in: "$$a._id"
+          }}, 0]
+          }},"$$REMOVE"]},
+        Width: {
+          $cond: [{$gt: ["$characteristics.Width", null]},
+          {value: "$characteristics.Width",
+          id: {$arrayElemAt: [{
+            $map: {
+              input: {
+                $filter: {
+                  input:"$chars",
+                  as: "c",
+                  cond: {$eq: ["$$c.name", "Width"]}
+              }
+            },
+            as:"a",
+            in: "$$a._id"
+          }}, 0]
+          }},"$$REMOVE"]},
+      }
+    }
+  },
+  {
+    $project: {
+      _id:1, characteristics:1, ratings:1, recommend:1
+    }
+  }
+])
 */
