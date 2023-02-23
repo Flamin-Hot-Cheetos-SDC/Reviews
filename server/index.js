@@ -4,9 +4,11 @@ const fs = require('fs');
 const csvParser = require('csv-parser');
 const through2 = require('through2');
 const path = require('path');
+const morgan = require('morgan');
 const { connection, mongoose, allreviews } = require('./db.js');
 
 const app = express();
+app.use(morgan('dev'));
 
 app.use(express.json());
 // fs.createReadStream(path.join(__dirname, '../sourceFiles/characteristic_reviews.csv'))
@@ -29,12 +31,11 @@ app.get('/reviews/:product_id', async (req, res) => {
 });
 
 app.get('/reviews/meta/:product_id', async (req, res) => {
-  if (typeof req.params.product_id !== 'number') {
+  if (typeof Number(req.params.product_id) !== 'number') {
     res.status(422).send('invalid product_id number');
   } else {
-    const input = req.params.product_id;
     const meta = await connection.collection('reviewMetaIds').findOne(
-      { _id: input },
+      { _id: Number(req.params.product_id) },
       {
         projection: {
           ratings: 1, recommend: 1, characteristics: 1, _id: 1
